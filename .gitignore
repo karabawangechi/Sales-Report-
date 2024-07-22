@@ -1,0 +1,5 @@
+/dist
+/node_modules
+/dbconfig.js
+/launch.json
+/models/distnc
