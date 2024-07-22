@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <title>Sales Report</title>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bx-line-chart-down'></i>
+            <span class="text">KBC Sales Report</span>
+        </a>
+        <ul class="side-menu top">
+            <li class="active">
+                <a href="index">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="salesperson">
+                    <i class='bx bx-user'></i>
+                    <span class="text">Salesperson</span>
+                </a>
+            </li>
+            <li>
+                <a href="customer">
+                    <i class='bx bx-group'></i>
+                    <span class="text">Customers</span>
+                </a>
+            </li>
+            <li>
+                <a href="brand">
+                    <i class='bx bxs-business'></i>
+                    <span class="text">Brands</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bx-log-out'></i>
+                    <span class="text">Log out</span>
+                </a>
+            </li>
+        </ul>
+        <img src="images/kbc_logo-removebg-preview.png" alt="" style="margin-top: 24px;">
+  
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content"> 
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell'></i>
+                <span class="num">8</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="images/people.png" alt="">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- CARDS -->  
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="numbers"><%= totalBrands %></div>
+                    <div class="cardName">Total Brands</div>
+                </div>
+                <div class="iconBx"><ion-icon name="eye"></ion-icon></div>
+            </div>
+            <div class="card">
+                <div>
+                    <div class="numbers"><%= totalSales %></div>
+                    <div class="cardName">Total Sales</div>
+                </div>
+                <div class="iconBx"><ion-icon name="pricetags"></ion-icon></div>
+            </div>
+            <div class="card">
+                <div>
+                    <div class="numbers"><%= totalCustomers %></div>
+                    <div class="cardName">Total Customers</div>
+                </div>
+                <div class="iconBx"><ion-icon name="chatbubbles"></ion-icon></div>
+            </div>
+            <div class="card">
+                <div>
+                    <div class="numbers"><%= totalSalespersons %></div>
+                    <div class="cardName">Total Salespersons</div>
+                </div>
+                <div class="iconBx"><ion-icon name="cash"></ion-icon></div>
+            </div>
+        </div>
+        <!-- CARDS -->
+
+        <!-- Adding charts  -->
+        <div class="graphBox">
+            <div class="box">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="box">
+                <canvas id="brandperfomance"></canvas>
+            </div>
+        </div>
+
+        <!-- Salesperson detail list  -->
+        <div class="salespersonlist">
+            <div class="recentsales">
+                <div class="cardHeader">
+                    <h2>Top Performing Salesperson</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Total Sales</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% topSalespersons.forEach(salesperson => { %>
+                            <tr>
+                                <td><%= salesperson.SalespersonName %></td>
+                                <td>Ksh <%= salesperson.TotalSales %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Top brands -->
+            <div class="topbrands">
+                <div class="cardHeader">
+                    <h2>Top Performing Brands</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Brand name</td>
+                            <td>Revenue</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% topBrands.forEach(brand => { %>
+                            <tr>
+                                <td><%= brand.BrandName %></td>
+                                <td>Ksh <%= brand.Revenue %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="topCustomers">
+            <div class="recentactivity">
+                <div class="cardHeader">
+                    <h2>Top Performing Customers</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Revenue</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% topCustomers.forEach(customer => { %>
+                            <tr>
+                                <td><%= customer.CustomerName %></td>
+                                <td>Ksh <%= customer.Revenue %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <!-- CONTENT -->
+
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+        const brandperfomance = document.getElementById('brandperfomance');
+
+        new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+            }
+        });
+
+        new Chart(brandperfomance, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+            }
+        });
+    </script>
+</body>
+</html>

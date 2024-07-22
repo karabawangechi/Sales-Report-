@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBC Sales Overview </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .dashboard {
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #005f80;
+            color: white;
+            padding: 10px 20px;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .get-dashboard {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        .date-range span {
+            background-color: #003c50;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .main {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        
+        .overview {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .total-amount {
+            display: flex;
+            align-items: center;
+        }
+        
+        .total-amount .gauge {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        
+        .total-amount .amount span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .opportunities {
+            text-align: center;
+        }
+        
+        .opportunities .number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .opportunities .percentage {
+            color: green;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .filters div {
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .filters div:last-child {
+            margin-right: 0;
+        }
+        
+        .chart {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+        }
+        
+        canvas {
+            width: 100% !important;
+            height: 400px !important;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <div class="logo">
+                <img src="kbc logo.png" alt="kbc logo">
+                <h1>KBC Sales overview</h1>
+            </div>
+            <button class="get-dashboard">KBC SALES REPORT DASHBOARD</button>
+            <div class="date-range">
+                <span>Nov 1, 2023 - Jan 26, 2024</span>
+            </div>
+        </header>
+        <section class="main">
+            <div class="overview">
+                <div class="total-amount">
+                    <div class="gauge"></div>
+                    <div class="amount">Total amount <br><span id="totalSalesAmount"></span></div>
+                </div>
+                <div class="opportunities">
+                    <h2>Number of Brands</h2>
+                    <div class="number">
+                        <span id="numberOfBrands"></span>
+                        <span class="percentage">+136.4%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="filters">
+                <div class="status-filter">
+                    <label for="status">Status</label>
+                    <select id="status" multiple>
+                        <option value="open" selected>Open</option>
+                        <option value="won" selected>Won</option>
+                        <option value="lost" selected>Lost</option>
+                    </select>
+                </div>
+                <div class="opportunities-filter">
+                    <li><a href="brand" title="brand" itemprop="url">Brand Performance</a></li>
+
+                </div>
+
+                <div class="opportunities-filter">
+                    <li><a href="salesperson" title="brand" itemprop="url">Salesperson Performance</a></li>
+
+                </div>
+                <div class="opportunities-filter">
+                    <li><a href="customer" title="brand" itemprop="url">Customer Performance</a></li>
+
+                </div>
+            </div>
+            <div class="chart">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Fetch data for the six best-selling brands
+                const response = await fetch('/bestsellingbrands');
+                const data = await response.json();
+        
+                // Extract brand names and sales amounts from the response
+                const brandNames = data.map(item => item.brandName);
+                const salesAmounts = data.map(item => item.salesAmount);
+        
+                // Update chart with the fetched data
+                const ctx = document.getElementById('revenueChart').getContext('2d');
+                const revenueChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: brandNames, // Use brand names as labels
+                        datasets: [{
+                            label: 'Sales Amount',
+                            data: salesAmounts, // Use sales amounts as data
+                            backgroundColor: ['#007bff', '#d67d03', '#563d7c', '#28a745', '#ffc107', '#dc3545']
+                            // Add more colors if you have more than six brands
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching and updating chart data:', error);
+            }
+        });
+    </script>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan 2024', 'Dec 2023', 'Nov 2023'],
+                datasets: [
+                    {
+                        label: 'Open',
+                        data: [1242409, 2092941, 2148489],
+                        backgroundColor: '#d67d03'
+                    },
+                    {
+                        label: 'Won',
+                        data: [387003, 792884, 572680],
+                        backgroundColor: '#007bff'
+                    },
+                    {
+                        label: 'Lost',
+                        data: [],
+                        backgroundColor: '#563d7c'
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 2500000
+                    }
+                }
+            }
+        });
+    });
+    
+</script>
+</html>

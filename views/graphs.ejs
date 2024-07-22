@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+        
+        .chart-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 300px;
+            max-width: 48%;
+            margin-bottom: 20px;
+        }
+        
+        .chart-card h2 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Sales Dashboard</h1>
+
+        <div class="charts-container">
+            <div class="chart-card">
+                <h2>Top closed deals</h2>
+                <canvas id="closed-deals-chart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Top lost deals</h2>
+                <canvas id="lost-deals-chart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Close rate for last 12 months</h2>
+                <canvas id="close-rate-chart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Lost deals reasons</h2>
+                <canvas id="lost-reasons-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const closedDealsCtx = document.getElementById('closed-deals-chart').getContext('2d');
+        const closedDealsChart = new Chart(closedDealsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['channel 1 adverts', 'coro radio adverts', 'digital platform', 'kiswahili radio adverts', 'english radio adverts'],
+                datasets: [{
+                    label: 'Closed amount',
+                    data: [260400, 213900, 69100, 61700, 58300],
+                    backgroundColor: '#4caf50',
+                    borderColor: '#388e3c',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    
+        const lostDealsCtx = document.getElementById('lost-deals-chart').getContext('2d');
+        const lostDealsChart = new Chart(lostDealsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Snapchat deal', 'Salesforce deal', 'Reddit deal', 'VMware deal', 'IBM deal'],
+                datasets: [{
+                    label: 'Lost value',
+                    data: [255800, 230200, 171000, 162800, 162600],
+                    backgroundColor: '#f44336',
+                    borderColor: '#d32f2f',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    
+        const closeRateCtx = document.getElementById('close-rate-chart').getContext('2d');
+        const closeRateChart = new Chart(closeRateCtx, {
+            type: 'bar',
+            data: {
+                labels: ['May 2023', 'Jun 2023', 'Jul 2023', 'Aug 2023', 'Sep 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023', 'Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024'],
+                datasets: [{
+                    label: 'Close rate',
+                    data: [15, 20, 10, 25, 18, 10, 22, 30, 12, 18, 24, 19, 15],
+                    backgroundColor: '#ff9800',
+                    borderColor: '#f57c00',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    
+        const lostReasonsCtx = document.getElementById('lost-reasons-chart').getContext('2d');
+        const lostReasonsChart = new Chart(lostReasonsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Feature limitations', 'Budget constraints', 'Better alternative found', 'Price too high', 'Lack of urgency'],
+                datasets: [{
+                    label: 'Lost deals reasons',
+                    data: [25.8, 19.7, 18.2, 25.8, 10.6],
+                    backgroundColor: ['#7e57c2', '#8d6e63', '#ffca28', '#d32f2f', '#29b6f6'],
+                    borderColor: ['#5e35b1', '#6d4c41', '#ffb300', '#c62828', '#039be5'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    });
+    
+</script>
+</html>
