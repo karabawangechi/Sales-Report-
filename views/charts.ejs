@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Dashboard</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+
+    <!-- Options for years will be dynamically populated -->
+    <select id="monthSelect">
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+    </select>
+    <button id="filterButton" onclick="updateChart()">Filter</button> <!-- New filter button -->
+
+    <!-- Modal for detailed view -->
+
+    <canvas id="myChart"></canvas>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function updateChart() {
+            const monthSelect = document.getElementById('monthSelect');
+            const selectedMonth = monthSelect.value;
+
+            // Sample data for each month
+            const monthData = {
+                0: [10, 12, 2, 15, 8, 9],   // January
+                1: [7, 14, 5, 10, 6, 4],    // February
+                2: [9, 11, 8, 12, 5, 7],    // March
+                3: [6, 9, 15, 10, 12, 8],   // April
+                4: [11, 13, 9, 14, 7, 5],   // May
+                5: [8, 10, 12, 9, 14, 7],   // June
+                6: [12, 15, 6, 11, 8, 9],   // July
+                7: [14, 8, 11, 13, 10, 12], // August
+                8: [13, 9, 14, 12, 8, 6],   // September
+                9: [10, 7, 13, 9, 11, 15],  // October
+                10: [8, 14, 10, 12, 13, 7], // November
+                11: [9, 12, 7, 10, 15, 11]  // December
+            };
+
+            chart.data.datasets[0].data = monthData[selectedMonth];
+            chart.update();
+        }
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+

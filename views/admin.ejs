@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="brand.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Sidebar styles */
+        #sidebar {
+            background-color: #fff;
+            width: 250px;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        #sidebar .brand {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #sidebar .brand i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        #sidebar .text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #sidebar .side-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar .side-menu li {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #sidebar .side-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+
+        #sidebar .side-menu li a i {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        #sidebar .side-menu li a:hover {
+            background-color: #f4f4f4;
+        }
+
+        #sidebar .side-menu li.active a {
+            background-color: #FD7238;
+            color: #fff;
+        }
+
+        #sidebar .side-menu li.active a i {
+            color: #fff;
+        }
+
+        #sidebar .side-menu li.active a .text {
+            color: #fff;
+        }
+
+        #sidebar .side-menu .logout {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            border-top: 1px solid #ddd;
+        }
+
+        #sidebar .side-menu .logout a {
+            color: #FD7238;
+        }
+
+        #sidebar img {
+            display: block;
+            margin: 20px auto;
+            width: 150px;
+        }
+
+        /* Content styles */
+        #content {
+            margin-left: 250px; /* Sidebar width */
+            padding: 20px;
+            flex: 1;
+        }
+
+        .container {
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #FD7238;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e66124;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #FD7238;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="a" class="brand">
+            <i class='bx bx-line-chart-down'></i>
+            <span class="text">KBC Sales Report</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="index">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="salesperson">
+                    <i class='bx bx-user'></i>
+                    <span class="text">Salesperson</span>
+                </a>
+            </li>
+            <li>
+                <a href="customer">
+                    <i class='bx bx-group'></i>
+                    <span class="text">Customers</span>
+                </a>
+            </li>
+            <li>
+                <a href="brand">
+                    <i class='bx bxs-business'></i>
+                    <span class="text">Brands</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li class="logout">
+                <a href="#" class="logout">
+                    <i class='bx bx-log-out'></i>
+                    <span class="text">Log out</span>
+                </a>
+            </li>
+        </ul>
+        <img src="images/kbc_logo-removebg-preview.png" alt="">
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell'></i>
+                <span class="num">8</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="images/people.png" alt="">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- Admin Page Content -->
+        <div class="container">
+            <h1>Admin Page</h1>
+            <form id="userForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <select id="role">
+                    <option value="Salesperson">Salesperson</option>
+                    <option value="TeamLead">Team Lead</option>
+                </select>
+                <button type="submit">Add User</button>
+            </form>
+
+            <h2>Users List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable">
+                    <!-- Users will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- CONTENT -->
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password, role })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadUsers();
+                } else {
+                    alert(data.message);
+                }
+            });
+        });
+
+        function loadUsers() {
+            fetch('/api/users')
+                .then(response => response.json())
+                .then(data => {
+                    const userTable = document.getElementById('userTable');
+                    userTable.innerHTML = '';
+                    data.users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.username}</td>
+                            <td>${user.role}</td>
+                            <td>${user.active ? 'Active' : 'Inactive'}</td>
+                            <td>
+                                <button onclick="toggleUser('${user.username}')">
+                                    ${user.active ? 'Deactivate' : 'Activate'}
+                                </button>
+                            </td>
+                        `;
+                        userTable.appendChild(row);
+                    });
+                });
+        }
+
+        function toggleUser(username) {
+            fetch(`/api/users/${username}/toggle`, {
+                method: 'PUT'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadUsers();
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadUsers);
+    </script>
+</body>
+</html>
