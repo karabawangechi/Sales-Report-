@@ -224,7 +224,7 @@ app.get('/index2.html', (req, res) => {
 app.get('/customer', async (req, res) => {
     try {
         const customerData = await getCustomerData();
-        res.render('customer', { customerData }); // Render 'customer.ejs' with customerData
+        res.render('customer', { customerData }); 
     } catch (error) {
         console.error('Error rendering customer page:', error);
         res.status(500).send('Internal Server Error');
@@ -499,19 +499,18 @@ app.get('/brand', async (req, res) => {
 });
 
 app.get('/filtered_sales', async (req, res) => {
-    const { year } = req.query; // Assuming search and year are sent from client query parameters
+    const { year } = req.query; 
     try {
-        // Fetch sales data from your database using parameters
         const salesData = await getSalesData(year);
 
-        // Log the fetched sales data for debugging
+        
        // console.log('Fetched Sales Data:',filteredData);
 
         if (!Array.isArray(salesData)) {
             throw new Error('Sales data is not an array');
         }
 
-        // Filter sales data based on year (sample logic, replace with actual query logic)
+      
         let filteredData = salesData.filter(salesperson => {
             let matchYear = true;
 
@@ -664,7 +663,7 @@ app.get('/brand', async (req, res) => {
 
 async function getCustomerData() {
     try {
-        await sql.connect(dbconfig); // Connect to the database using dbconfig
+        await sql.connect(dbconfig); 
         const result = await sql.query(`
         SELECT 
             ArCustomer.Name AS CustomerName, 
@@ -702,16 +701,15 @@ async function getCustomerData() {
             }
 
             customerMap[row.CustomerName].labels.push(monthNames[row.TrnMonth]);
-            customerMap[row.CustomerName].data.push(Math.round(row.Revenue)); // Round the revenue values
+            customerMap[row.CustomerName].data.push(Math.round(row.Revenue)); 
         });
 
         return customerData;
     } catch (err) {
         console.error('Error fetching customer data:', err);
-        throw err; // Propagate the error upwards
+        throw err;
     } finally {
-        await sql.close(); // Close the database connection
-    }
+        await sql.close(); 
 }
 async function getSalesData(year) {
     await sql.connect(dbconfig);
@@ -759,13 +757,11 @@ async function getSalesData(year) {
             salesData.push(dataMap[row.SalespersonName]);
         }
         dataMap[row.SalespersonName].labels.push(monthNames[row.TrnMonth - 1]);
-        dataMap[row.SalespersonName].data.push(Math.round(row.SalesAmount)); // Round off the sales amount
-
+        dataMap[row.SalespersonName].data.push(Math.round(row.SalesAmount)); 
         if (!dataMap[row.SalespersonName].brands[row.BrandName]) {
             dataMap[row.SalespersonName].brands[row.BrandName] = 0;
         }
-        dataMap[row.SalespersonName].brands[row.BrandName] += Math.round(row.SalesAmount); // Round off the sales amount
-    });
+        dataMap[row.SalespersonName].brands[row.BrandName] += Math.round(row.SalesAmount); 
 
     salesData.forEach(salesperson => {
         Object.entries(salesperson.brands).forEach(([brand, amount]) => {
