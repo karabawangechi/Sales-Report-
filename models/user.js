@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     }
 })
 UserSchema.methods.isValidPassword = function (password) {
-    // Simple password validation, you can replace it with your own logic
+    
     return this.password === password;
 };
 
