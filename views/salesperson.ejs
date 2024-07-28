@@ -217,7 +217,8 @@
                 let pieChartInstance;
     
                 const selectYear = document.getElementById('selectYear');
-    
+                const searchInput = document.getElementById('salespersonSearch');
+
                 const fetchYears = async () => {
                     try {
                         const response = await fetch('/years');
@@ -375,6 +376,7 @@
                     modal.style.display = 'none';
                 };
     
+                // Ensure the modal element is available before adding the event listener
                 const modalCloseButton = document.querySelector('.close');
                 if (modalCloseButton) {
                     modalCloseButton.addEventListener('click', closeModal);
@@ -400,6 +402,11 @@
                     window.location.href = `/filtered_sales?year=${selectedYear}`;
                     
                 };
+                searchInput.addEventListener('input', () => {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    const filteredData = salesData.filter(salesperson => salesperson.name.toLowerCase().includes(searchTerm));
+                    renderCharts(filteredData);
+                });
             });
         </script>
         <script>
